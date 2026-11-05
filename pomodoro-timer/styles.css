@@ -1,0 +1,322 @@
+:root {
+  color-scheme: light;
+  --bg: #efe8dc;
+  --glow: #e7d3c5;
+  --card: #fbf7f1;
+  --ink: #241c16;
+  --muted: #6f645b;
+  --line: rgba(36, 28, 22, 0.14);
+  --track: rgba(36, 28, 22, 0.06);
+  --pill: #fffdf9;
+  --accent: #c2442c;
+  --accent-ink: #fffaf7;
+  --shadow: 0 22px 50px rgba(60, 36, 22, 0.1);
+}
+
+body[data-mode="short"] {
+  --glow: #d3e6dc;
+  --accent: #1f6b56;
+  --accent-ink: #f4fffb;
+}
+
+body[data-mode="long"] {
+  --glow: #d5deee;
+  --accent: #2a527c;
+  --accent-ink: #f5f8ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #161311;
+    --glow: #3a241c;
+    --card: #221c18;
+    --ink: #f6efe7;
+    --muted: #c9bbb0;
+    --line: rgba(246, 239, 231, 0.16);
+    --track: rgba(255, 255, 255, 0.06);
+    --pill: #3a322c;
+    --accent: #ef6a4c;
+    --accent-ink: #2a120d;
+    --shadow: 0 22px 50px rgba(0, 0, 0, 0.4);
+  }
+
+  body[data-mode="short"] {
+    --glow: #1a3330;
+    --accent: #3dbe96;
+    --accent-ink: #06241a;
+  }
+
+  body[data-mode="long"] {
+    --glow: #1c2c44;
+    --accent: #8eb6ea;
+    --accent-ink: #0d1b2e;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  font-family: Inter, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(900px 420px at 50% -8%, var(--glow), transparent 62%),
+    var(--bg);
+}
+
+.app {
+  width: min(440px, 100%);
+  padding: 28px 28px 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+body.is-cue .app {
+  box-shadow: 0 0 0 3px var(--accent), var(--shadow);
+}
+
+h1 {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  background: var(--track);
+  border-radius: 999px;
+}
+
+.modes button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.2;
+  min-height: 44px;
+  padding: 9px 6px;
+  white-space: nowrap;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.modes button[aria-checked="true"] {
+  background: var(--pill);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.dial {
+  position: relative;
+  width: min(280px, 78vw);
+  margin: 18px auto 4px;
+}
+
+.dial svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.track,
+.progress {
+  fill: none;
+  stroke-width: 8;
+}
+
+.track {
+  stroke: var(--line);
+}
+
+.progress {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.face {
+  position: absolute;
+  inset: 14%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.phase {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.time {
+  margin: 0;
+  font-family: "JetBrains Mono", "Cascadia Mono", ui-monospace, monospace;
+  font-size: clamp(48px, 12vw, 68px);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.preview,
+.status,
+.cycle,
+.keys {
+  text-align: center;
+}
+
+.preview {
+  margin: 10px 0 0;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.status {
+  min-height: 2.7em;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.status.cue {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.controls button {
+  min-height: 48px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.controls button.primary {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.controls button.ghost {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+}
+
+.controls button:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.dots span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+.dots span.is-done {
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.cycle {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+
+.keys {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+noscript p {
+  width: min(440px, 100%);
+  margin: 12px auto 0;
+  text-align: center;
+  color: var(--ink);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+  .app {
+    padding: 22px 16px 18px;
+    border-radius: 22px;
+  }
+
+  .modes button {
+    font-size: 0.75rem;
+    padding: 9px 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress {
+    transition: none;
+  }
+}
+
+@keyframes cue-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body.is-cue .dial {
+    animation: cue-pulse 0.9s ease-in-out 3;
+  }
+}

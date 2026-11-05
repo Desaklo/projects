@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pomodoro</title>
+    <meta name="description" content="A classic pomodoro timer: 25 minutes of work, a 5-minute short break, and a 15-minute long break after four work sessions.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23c2442c'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body data-mode="work">
+    <main class="app">
+      <h1>Pomodoro</h1>
+
+      <div class="modes" role="radiogroup" aria-label="Session">
+        <button type="button" role="radio" id="mode-work" data-mode="work" aria-checked="true">Work</button>
+        <button type="button" role="radio" id="mode-short" data-mode="short" aria-checked="false">Short break</button>
+        <button type="button" role="radio" id="mode-long" data-mode="long" aria-checked="false">Long break</button>
+      </div>
+
+      <div class="dial">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="track" cx="100" cy="100" r="90"></circle>
+          <circle class="progress" id="progress" cx="100" cy="100" r="90" transform="rotate(-90 100 100)"></circle>
+        </svg>
+        <div class="face">
+          <p class="phase" id="phase">Work</p>
+          <p class="time" id="time" role="timer">25:00</p>
+        </div>
+      </div>
+
+      <p class="preview" id="preview" hidden></p>
+      <p class="status" id="status" role="status">Press Start for 25 minutes of work.</p>
+
+      <div class="controls">
+        <button type="button" id="start" class="primary">Start</button>
+        <button type="button" id="pause" class="ghost" disabled>Pause</button>
+        <button type="button" id="reset" class="ghost">Reset</button>
+      </div>
+
+      <div class="dots" id="dots" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <p class="cycle" id="cycle">Round 1 · 0 of 4 work sessions</p>
+      <p class="keys">Space starts or pauses · R resets</p>
+    </main>
+    <noscript>
+      <p>This timer needs JavaScript. Enable it, then reload the page.</p>
+    </noscript>
+    <script src="app.js"></script>
+  </body>
+</html>
