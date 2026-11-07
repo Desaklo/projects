@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Local habit data (created on first command that writes)
+habits.json
+.habits-*.tmp
